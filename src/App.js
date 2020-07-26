@@ -1,20 +1,14 @@
 import React,{Component} from 'react';
+import {CarrdList, CardList} from './components/card-list/card-list.component';
 import './App.css';
 
 class App extends Component {
 constructor(){
   super();
   this.state={
-   monsters:[
-    //  {name: 'Frankenstein',id:'1'},
-    //  {name: 'Dracula',id:'2'},
-    //  {name: 'Zombie',id:'3'}
-    //  componentDidMount(){
-    //   fetch('https://jsonplaceholder.typicode.com/users')
-    //   .then(response=>response.json())
-    //   .then(users=>this.setState({monster:users}));
-    ]
-    };
+   monsters:[],
+   searchFiels:' '
+  };
   }
 
   componentDidMount(){
@@ -28,12 +22,13 @@ constructor(){
   render(){
     return (
       <div className="App">
-        {
-          this.state.monsters.map(monster=>(
-          <h1 key={monster.id}>{monster.name}</h1>))
-
-        }
-        </div>
+        <input type='search' placeholder='search monsters' onChange={e=>{
+          this.setState({searchFiel: e.target.value}, ()=> //setState is a-sincrinic this is a calback wich runs after setState is finished
+          console.log(this.state));}}
+          />
+        <CardList monsters={this.state.monsters}>
+        </CardList> 
+      </div>
     );
   }
 }

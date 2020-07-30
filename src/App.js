@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
 import {CarrdList, CardList} from './components/card-list/card-list.component';
+import {SearchBox} from './components/search-box/search-box.component';
+
 import './App.css';
 
 class App extends Component {
@@ -7,7 +9,7 @@ constructor(){
   super();
   this.state={
    monsters:[],
-   searchFiels:' '
+   searchField:' '
   };
   }
 
@@ -20,13 +22,20 @@ constructor(){
 
 
   render(){
+    const{monsters,searchField}=this.state;
+    const filteredMonsters=monsters.filter(monster=>
+      monster.name.toLowerCase().includes(searchField.toLowerCase())
+      );
     return (
       <div className="App">
-        <input type='search' placeholder='search monsters' onChange={e=>{
-          this.setState({searchFiel: e.target.value}, ()=> //setState is a-sincrinic this is a calback wich runs after setState is finished
-          console.log(this.state));}}
-          />
-        <CardList monsters={this.state.monsters}>
+        <h1> Monsters Rolodex </h1>
+      <SearchBox
+        placeholder='search monsters'
+        handleChange={e=>
+          this.setState({searchField: e.target.value}, ()=> //setState is a-sincrinic this is a calback wich runs after setState is finished
+          console.log(this.state))}
+     />
+        <CardList monsters={filteredMonsters}>
         </CardList> 
       </div>
     );
